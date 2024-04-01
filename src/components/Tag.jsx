@@ -26,10 +26,10 @@ export function Tag(props) {
     };
 
     return (
-        <div className="ev-workflow-tag-padding">
-            <div className="ev-workflow-tag-container">
-                <span ref={input} tabIndex="0" className="input ev-workflow-input" role="textbox"></span>
-                <button className="ev-workflow-button ev-workflow-icon ev-workflow-delete" onClick={deleteTag}>
+        <div className="ev-aliastags-tag-padding">
+            <div className="ev-aliastags-tag-container">
+                <span ref={input} tabIndex="0" className="input ev-aliastags-input" role="textbox"></span>
+                <button className="ev-aliastags-button ev-aliastags-icon ev-aliastags-delete" onClick={deleteTag}>
                     <i className="mdi mdi-close"></i>
                 </button>
             </div>

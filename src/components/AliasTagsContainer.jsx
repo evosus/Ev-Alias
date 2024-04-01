@@ -8,7 +8,7 @@ import { Tag } from "./Tag";
 import { v4 as uuidv4 } from "uuid";
 import * as mx from "mendix";
 
-export function WorkflowContainer(props) {
+export function AliasTagContainer(props) {
     const { onClickMoreAction } = props;
     const { onTagAddAction } = props;
     const [mounted, setMounted] = useState(false);
@@ -112,8 +112,8 @@ export function WorkflowContainer(props) {
     };
 
     return (
-        <div className="ev-workflow-container">
-            <button className="ev-workflow-admin-button ev-workflow-admin-button-add">
+        <div className="ev-aliastags-container">
+            <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
                 <input
                     type="text"
                     placeholder="add a tag"
@@ -134,7 +134,7 @@ export function WorkflowContainer(props) {
             {tagComponents.map(tag => tag)}
             {tagCount - limit > 0 ? (
                 <button
-                    className="ev-workflow-admin-button ev-workflow-admin-button-view-all"
+                    className="ev-aliastags-admin-button ev-aliastags-admin-button-view-all"
                     onClick={() => onClickMoreAction.execute()} // call tag overflow microflow
                 >
                     <i className="mdi mdi-open-in-new"></i>

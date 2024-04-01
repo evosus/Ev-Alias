@@ -1,10 +1,10 @@
 {
-  "name": "workflow",
-  "widgetName": "Workflow",
+  "name": "aliastags",
+  "widgetName": "AliasTags",
   "version": "1.0.0",
-  "description": "My widget description",
+  "description": "Tagging widget for enhanced client use and searchability",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
-  "author": "Troy Barnard",
+  "author": "Troy Barnard and Tristan Emmerson",
   "engines": {
     "node": ">=16"
   },
