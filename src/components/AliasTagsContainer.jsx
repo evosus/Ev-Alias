@@ -126,6 +126,7 @@ export function AliasTagContainer(props) {
                     }}
                     onBlur={handleBlur}
                     ref={inputRef}
+                    style={{ marginBottom: "0", verticalAlign: "middle" }}
                 />
                 <span onClick={addTag.bind(this)}>
                     <i className="mdi mdi-plus"></i>

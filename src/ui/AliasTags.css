@@ -22,7 +22,12 @@
     width: 100px;
     outline: none;
     padding: 0 5px;
-    margin-right: 5px; 
+    margin-right: 5px;
+    margin-bottom: 0px !important; 
+}
+
+.ev-aliastags-container .ev-aliastags-admin-button-add input[type="text"] {
+    margin-bottom: 0 !important;
 }
 
 .confirmation-modal {
@@ -71,9 +76,9 @@
 }
 
 .ev-aliastags-input {
-    padding: 16px 10px; /* Adjust padding to provide space around the text */
-    box-sizing: border-box; /* Ensure padding is included in the element's total width */
-    vertical-align: text-bottom !important; /* Align text vertically within the input field */
+    padding: 16px 10px; 
+    box-sizing: border-box;
+    vertical-align: text-bottom !important;
 }
 
 @keyframes fade-in {
@@ -98,7 +103,7 @@
   position: relative;
 }
 .input-wrap .input {
-  position: absolute;
+  position:relative;
   left: 0;
 }
 
@@ -140,4 +145,9 @@
     font-size: 20px;
     margin-right: 5px;
 }
-  
+
+/*.obstinate-input-class {
+    margin-bottom: 0 !important;
+    vertical-align: middle; 
+}
+*/

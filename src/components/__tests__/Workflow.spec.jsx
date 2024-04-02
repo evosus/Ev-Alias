@@ -1,10 +1,13 @@
+/* eslint-disable no-undef */
+/* eslint-disable arrow-body-style */
 import { createElement } from "react";
 import { shallow } from "enzyme";
 
+// eslint-disable-next-line sort-imports
 import { Workflow } from "../Workflow";
 
 describe("Workflow", () => {
-    const createWorkflow = (props) => shallow(<Workflow {...props} />);
+    const createWorkflow = props => shallow(<Workflow {...props} />);
 
     it("should render the structure correctly", () => {
         const workflowProps = {
@@ -15,7 +18,10 @@ describe("Workflow", () => {
         expect(
             workflow.equals(
                 <div className="ev-workflow-container">
-                    <button className="ev-workflow-admin-button ev-workflow-admin-button-add" onClick={addTag.bind(this)}>
+                    <button
+                        className="ev-workflow-admin-button ev-workflow-admin-button-add"
+                        onClick={addTag.bind(this)}
+                    >
                         <i className="mdi mdi-plus"></i>Add
                     </button>
                     {tagComponents.map(tag => {
