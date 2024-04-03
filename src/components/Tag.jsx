@@ -34,7 +34,7 @@ export function Tag(props) {
                 </button>
             </div>
             {showConfirmDialog && (
-                <div className="confirmation-modal" style={{ top: "-150%" }}>
+                <div className="confirmation-modal" style={{ top: "-110%" }}>
                     <p>Confirm delete?</p>
                     <button onClick={cancelDeleteTag}>No</button>
                     <button onClick={confirmDeleteTag}>Yes</button>
