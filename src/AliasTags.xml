@@ -25,24 +25,9 @@
                 </attributeTypes>
             </property>
 
-            <property key="autoSave" type="boolean" defaultValue="false">
-                <caption>Auto-Save</caption>
-                <description>'Yes' for Profile pages. 'No' for Update screens.</description>
-            </property>
-
-            <property key="onChangeAction" type="action" required="false">
-                <caption>On change</caption>
-                <description>MF to handle Alias Tags onChange</description>
-            </property>
-
             <property key="onClickMoreAction" type="action" required="false">
                 <caption>Overflow Tags</caption>
                 <description>MF to handle opening Alias Tags Overflow</description>
-            </property>
-
-            <property key="onTagAddAction" type="action" required="false">
-                <caption>New Alias Tag</caption>
-                <description>MF to handle addition of new Alias Tag</description>
             </property>
 
             <property key="limit" type="string" required="false" defaultValue="5">
@@ -50,6 +35,40 @@
                 <description>Displayed tag count</description>
             </property>
 
+            <property key="autoSave" type="boolean" defaultValue="false">
+                <caption>Auto-Save</caption>
+                <description>'Yes' for Profile pages. 'No' for Update screens.</description>
+            </property>
+
         </propertyGroup>
+
+        <propertyGroup caption="AutoSave = True">
+        
+            <property key="onChangeActionAutoSaveTrue" type="action" required="false">
+                <caption>On change</caption>
+                <description>OCH MF with commit</description>
+            </property>
+
+            <property key="onTagAddActionAutoSaveTrue" type="action" required="false">
+                <caption>New Tag Add</caption>
+                <description>OnTagAdd MF with commit</description>
+            </property>
+
+        </propertyGroup>
+
+        <propertyGroup caption="AutoSave = False">
+        
+            <property key="onChangeActionAutoSaveFalse" type="action" required="false">
+                <caption>On change</caption>
+                <description>OCH MF with commit</description>
+            </property>
+
+            <property key="onTagAddActionAutoSaveFalse" type="action" required="false">
+                <caption>New Tag Add</caption>
+                <description>OnTagAdd MF with commit</description>
+            </property>
+
+        </propertyGroup>
+
     </properties>
 </widget>

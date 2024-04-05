@@ -10,12 +10,12 @@ import * as mx from "mendix";
 
 export function AliasTagContainer(props) {
     const { onClickMoreAction } = props;
-    const { onTagAddAction } = props;
+    const { onTagAddActionAutoSaveTrue } = props;
     const [mounted, setMounted] = useState(false);
     const [tagsArray, setTagsArray] = useState([]);
     const [masterTagsList, setMasterTagsList] = useState(props.masterTagsList.value ?? "");
     const [tagComponents, setTagComponents] = useState([]);
-    const [limit] = useState(props.limit ?? 5); // configurable in widget now
+    const [limit] = useState(props.limit ?? 10); // configurable in widget now
     const [delimiter] = "|";
     const [newTag, setNewTag] = useState(props.NewTag ?? ""); // new entity attribute for managing newTag value
     const [tagCount, setTagCount] = useState(0);
@@ -39,8 +39,8 @@ export function AliasTagContainer(props) {
         fullTagsArray.splice(index, 1, newValue);
         const updatedMasterTagsList = fullTagsArray.join(delimiter);
         props.masterTagsList.setValue(updatedMasterTagsList);
-        if (props.onChangeAction) {
-            props.onChangeAction.execute(); // call onChange microflow
+        if (props.onChangeActionAutoSaveTrue) {
+            props.onChangeActionAutoSaveTrue.execute(); // call onChange microflow
         }
         return true;
     };
@@ -50,8 +50,8 @@ export function AliasTagContainer(props) {
         fullTagsArray.splice(index, 1);
         const updatedMasterTagsList = fullTagsArray.join(delimiter);
         props.masterTagsList.setValue(updatedMasterTagsList);
-        if (props.onChangeAction) {
-            props.onChangeAction.execute(); // call onChange microflow
+        if (props.onChangeActionAutoSaveTrue) {
+            props.onChangeActionAutoSaveTrue.execute(); // call onChange microflow
         }
         updateAllTags(updatedMasterTagsList);
     };
@@ -88,8 +88,9 @@ export function AliasTagContainer(props) {
         // set the value of newTag attribute
         props.newTag.setValue(newTag);
 
-        if (props.onTagAddAction) {
-            props.onTagAddAction.execute(); // call onAdd microflow
+        if (props.onTagAddActionAutoSaveTrue) {
+            console.log("Adding tag. AutoSave enabled:", autoSave);
+            props.onTagAddActionAutoSaveTrue.execute(); // call onAdd microflow
         }
         setNewTag(""); // clear the input field after adding the tag
     };
