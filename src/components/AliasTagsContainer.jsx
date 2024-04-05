@@ -16,7 +16,7 @@ export function AliasTagContainer(props) {
     const [masterTagsList, setMasterTagsList] = useState(props.masterTagsList.value ?? "");
     const [tagComponents, setTagComponents] = useState([]);
     const [limit] = useState(props.limit ?? 5); // configurable in widget now
-    const [delimiter] = useState(props.delimiter ?? ",");
+    const [delimiter] = useState(props.delimiter ?? "|");
     const [newTag, setNewTag] = useState(props.NewTag ?? ""); // new entity attribute for managing newTag value
     const [tagCount, setTagCount] = useState(0);
     const [tagCountDisplay, setTagCountDisplay] = useState("");
