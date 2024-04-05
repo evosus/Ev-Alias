@@ -11,7 +11,7 @@
 
             <property key="masterTagsList" type="attribute">
                 <caption>Tag String</caption>
-                <description>String attribute that maintains all delimited tags</description>
+                <description>String attribute that maintains all tags by delimiter</description>
                 <attributeTypes>
                     <attributeType name="String"/>
                 </attributeTypes>
@@ -19,30 +19,35 @@
 
             <property key="newTag" type="attribute">
                 <caption>New Tag Attribute</caption>
-                <description>String attribute that is placeholder for new tag values</description>
+                <description>String placeholder for new tag</description>
                 <attributeTypes>
                     <attributeType name="String"/>
                 </attributeTypes>
             </property>
 
+            <property key="autoSave" type="boolean" defaultValue="false">
+                <caption>Auto-Save</caption>
+                <description>'Yes' for Profile pages. 'No' for Update screens.</description>
+            </property>
+
             <property key="onChangeAction" type="action" required="false">
                 <caption>On change</caption>
-                <description>Mircoflow that handles Alias Tags onChange event</description>
+                <description>MF to handle Alias Tags onChange</description>
             </property>
 
             <property key="onClickMoreAction" type="action" required="false">
                 <caption>Overflow Tags</caption>
-                <description>Microflow that handles opening of Alias Tags Overflow Overview event</description>
+                <description>MF to handle opening Alias Tags Overflow</description>
             </property>
 
             <property key="onTagAddAction" type="action" required="false">
                 <caption>New Alias Tag</caption>
-                <description>Microflow that handles addition of new Alias Tag event</description>
+                <description>MF to handle addition of new Alias Tag</description>
             </property>
 
             <property key="limit" type="string" required="false" defaultValue="5">
                 <caption>Limit</caption>
-                <description>Limit number of displayed tags</description>
+                <description>Displayed tag count</description>
             </property>
 
         </propertyGroup>
