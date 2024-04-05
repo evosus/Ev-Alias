@@ -93,7 +93,6 @@ export function AliasTagContainer(props) {
         //creating conditional execution of onTagAdd action based on widget autoSave config
         const onTagAddAction = autoSave ? props.onTagAddActionAutoSaveTrue : props.onTagAddActionAutoSaveFalse;
         if (onTagAddAction) {
-            console.log("Adding tag. AutoSave enabled:", autoSave);
             onTagAddAction.execute();
         }
         setNewTag(""); // clear the input field after adding the tag
@@ -102,7 +101,6 @@ export function AliasTagContainer(props) {
     const handleNewTagChange = event => {
         const inputValue = event.target.value;
         setNewTag(inputValue);
-        console.log("New Tag Value:", inputValue);
     };
 
     const inputRef = useRef(null);
