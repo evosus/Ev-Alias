@@ -10,7 +10,6 @@ import * as mx from "mendix";
 
 export function AliasTagContainer(props) {
     const { onClickMoreAction } = props;
-    const { onTagAddActionAutoSaveTrue } = props;
     const [mounted, setMounted] = useState(false);
     const [tagsArray, setTagsArray] = useState([]);
     const [masterTagsList, setMasterTagsList] = useState(props.masterTagsList.value ?? "");
@@ -39,8 +38,10 @@ export function AliasTagContainer(props) {
         fullTagsArray.splice(index, 1, newValue);
         const updatedMasterTagsList = fullTagsArray.join(delimiter);
         props.masterTagsList.setValue(updatedMasterTagsList);
-        if (props.onChangeActionAutoSaveTrue) {
-            props.onChangeActionAutoSaveTrue.execute(); // call onChange microflow
+        //creating conditional execution of onChange action based on widget autoSave config
+        const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
+        if (onChangeAction) {
+            onChangeAction.execute();
         }
         return true;
     };
@@ -50,8 +51,10 @@ export function AliasTagContainer(props) {
         fullTagsArray.splice(index, 1);
         const updatedMasterTagsList = fullTagsArray.join(delimiter);
         props.masterTagsList.setValue(updatedMasterTagsList);
-        if (props.onChangeActionAutoSaveTrue) {
-            props.onChangeActionAutoSaveTrue.execute(); // call onChange microflow
+        //creating conditional execution of onChange action based on widget autoSave config
+        const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
+        if (onChangeAction) {
+            onChangeAction.execute();
         }
         updateAllTags(updatedMasterTagsList);
     };
@@ -87,10 +90,11 @@ export function AliasTagContainer(props) {
     const addTag = () => {
         // set the value of newTag attribute
         props.newTag.setValue(newTag);
-
-        if (props.onTagAddActionAutoSaveTrue) {
+        //creating conditional execution of onTagAdd action based on widget autoSave config
+        const onTagAddAction = autoSave ? props.onTagAddActionAutoSaveTrue : props.onTagAddActionAutoSaveFalse;
+        if (onTagAddAction) {
             console.log("Adding tag. AutoSave enabled:", autoSave);
-            props.onTagAddActionAutoSaveTrue.execute(); // call onAdd microflow
+            onTagAddAction.execute();
         }
         setNewTag(""); // clear the input field after adding the tag
     };
