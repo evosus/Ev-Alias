@@ -11,7 +11,7 @@
 
             <property key="masterTagsList" type="attribute">
                 <caption>Tag String</caption>
-                <description>Alias Tag String attribute. The string attribute that maintains all tags to be split on delimiter</description>
+                <description>String attribute that maintains all delimited tags</description>
                 <attributeTypes>
                     <attributeType name="String"/>
                 </attributeTypes>
@@ -19,7 +19,7 @@
 
             <property key="newTag" type="attribute">
                 <caption>New Tag Attribute</caption>
-                <description>string attribute for maintaining state of new tag</description>
+                <description>String attribute that is placeholder for new tag values</description>
                 <attributeTypes>
                     <attributeType name="String"/>
                 </attributeTypes>
@@ -40,10 +40,6 @@
                 <description>Microflow that handles addition of new Alias Tag event</description>
             </property>
 
-            <property key="delimiter" type="string" required="false" defaultValue="' '">
-                <caption>Delimiter</caption>
-                <description>Delimiter for Alias.(currently must be comma)</description>
-            </property>
             <property key="limit" type="string" required="false" defaultValue="5">
                 <caption>Limit</caption>
                 <description>Limit number of displayed tags</description>
