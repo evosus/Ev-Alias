@@ -100,6 +100,11 @@ export function AliasTagContainer(props) {
 
     const handleNewTagChange = event => {
         const inputValue = event.target.value;
+        if (inputValue.includes("|")) {
+            // eslint-disable-next-line no-alert
+            alert("The pipe character is a reserved character. '|' Cannot be used.");
+            return;
+        }
         setNewTag(inputValue);
     };
 
