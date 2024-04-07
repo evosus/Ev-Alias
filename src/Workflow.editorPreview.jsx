@@ -3,7 +3,7 @@ import { AliasTagsContainer } from "./components/AliasTagsContainer";
 
 export class preview extends Component {
     render() {
-        return <AliasTagsContainer masterTagsList={this.props.masterTagsList} delimiter={this.props.delimiter}/>;
+        return <AliasTagsContainer masterTagsList={this.props.masterTagsList} delimiter={this.props.delimiter} />;
     }
 }
 

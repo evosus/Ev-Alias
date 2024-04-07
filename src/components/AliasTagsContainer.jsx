@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable sort-imports */
@@ -9,17 +10,19 @@ import { v4 as uuidv4 } from "uuid";
 import * as mx from "mendix";
 
 export function AliasTagContainer(props) {
+    const [charLimit] = useState(props.charLimit ?? 1000);
     const { onClickMoreAction } = props;
     const [mounted, setMounted] = useState(false);
     const [tagsArray, setTagsArray] = useState([]);
     const [masterTagsList, setMasterTagsList] = useState(props.masterTagsList.value ?? "");
     const [tagComponents, setTagComponents] = useState([]);
-    const [limit] = useState(props.limit ?? 10); // configurable in widget now
+    const [tagLimit] = useState(props.tagLimit ?? 10); // configurable in widget now
     const [delimiter] = "|";
     const [newTag, setNewTag] = useState(props.NewTag ?? ""); // new entity attribute for managing newTag value
     const [tagCount, setTagCount] = useState(0);
     const [tagCountDisplay, setTagCountDisplay] = useState("");
     const [autoSave] = useState(props.autoSave ?? false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         if (mounted) {
@@ -47,8 +50,12 @@ export function AliasTagContainer(props) {
     };
 
     const deleteTag = (index, value) => {
-        const fullTagsArray = props.masterTagsList.value.split(delimiter).filter(i => i);
+        const fullTagsArrayBefore = props.masterTagsList.value.split(delimiter).filter(i => i);
+        //console.log("full tags array before delete:", fullTagsArrayBefore);
+        const fullTagsArray = [...fullTagsArrayBefore];
         fullTagsArray.splice(index, 1);
+        //console.log("full tags array after delete:", fullTagsArray);
+
         const updatedMasterTagsList = fullTagsArray.join(delimiter);
         props.masterTagsList.setValue(updatedMasterTagsList);
         //creating conditional execution of onChange action based on widget autoSave config
@@ -62,14 +69,15 @@ export function AliasTagContainer(props) {
     const updateAllTags = value => {
         if (value !== undefined) {
             const tagCount = value.split(delimiter).filter(i => i).length;
-            var tagCountDisplay = tagCount - limit;
-            if (tagCount - limit > 99) {
+            var tagCountDisplay = tagCount - tagLimit;
+            if (tagCount - tagLimit > 99) {
                 tagCountDisplay = "99+";
             }
             const tagsArraySliced = value
                 .split(delimiter)
                 .filter(i => i)
-                .slice(0, limit);
+                .slice(0, tagLimit);
+            //console.log("tags array:", tagsArraySliced);
             const newTagComponents = tagsArraySliced.map((tag, index) => (
                 <Tag
                     key={uuidv4()}
@@ -81,6 +89,7 @@ export function AliasTagContainer(props) {
             ));
             setMasterTagsList(value);
             setTagsArray(tagsArraySliced);
+            //console.log("tag components:", newTagComponents);
             setTagComponents(newTagComponents);
             setTagCount(tagCount);
             setTagCountDisplay(tagCountDisplay);
@@ -100,12 +109,22 @@ export function AliasTagContainer(props) {
 
     const handleNewTagChange = event => {
         const inputValue = event.target.value;
-        if (inputValue.includes("|")) {
-            // eslint-disable-next-line no-alert
-            alert("The pipe character is a reserved character. '|' Cannot be used.");
+        const pipeIndex = inputValue.indexOf("|");
+
+        if (pipeIndex !== -1) {
+            alert("The pipe character '|' is a reserved character and cannot be used.");
             return;
         }
+
+        if (inputValue.length > charLimit) {
+            //console.log("Character Limit exceeded");
+            alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
+            return;
+        }
+
+        //console.log("No error");
         setNewTag(inputValue);
+        setErrorMessage(""); // Clear any previous error message
     };
 
     const inputRef = useRef(null);
@@ -142,10 +161,10 @@ export function AliasTagContainer(props) {
                 </span>
             </button>
             {tagComponents.map(tag => tag)}
-            {tagCount - limit > 0 ? (
+            {tagCount - tagLimit > 0 ? (
                 <button
                     className="ev-aliastags-admin-button ev-aliastags-admin-button-view-all"
-                    onClick={() => onClickMoreAction.execute()} // call tag overflow microflow
+                    onClick={() => onClickMoreAction.execute()} // call tag overflow
                 >
                     <i className="mdi mdi-open-in-new"></i>
                     {tagCountDisplay} more
