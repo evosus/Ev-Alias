@@ -50,13 +50,13 @@
         <propertyGroup caption="AutoSave = True">
         
             <property key="onChangeActionAutoSaveTrue" type="action" required="false">
-                <caption>On change</caption>
-                <description>OCH MF with commit</description>
+                <caption>On Change</caption>
+                <description>OCH mf with commit</description>
             </property>
 
             <property key="onTagAddActionAutoSaveTrue" type="action" required="false">
-                <caption>New Tag Add</caption>
-                <description>OnTagAdd MF with commit</description>
+                <caption>New Tag</caption>
+                <description>OnTagAdd mf with commit</description>
             </property>
 
         </propertyGroup>
@@ -64,13 +64,13 @@
         <propertyGroup caption="AutoSave = False">
         
             <property key="onChangeActionAutoSaveFalse" type="action" required="false">
-                <caption>On change</caption>
-                <description>OCH MF with commit</description>
+                <caption>On Change</caption>
+                <description>OCH mf no commit</description>
             </property>
 
             <property key="onTagAddActionAutoSaveFalse" type="action" required="false">
-                <caption>New Tag Add</caption>
-                <description>OnTagAdd MF with commit</description>
+                <caption>New Tag</caption>
+                <description>OnTagAdd mf no commit</description>
             </property>
 
         </propertyGroup>

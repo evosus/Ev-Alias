@@ -97,7 +97,7 @@ export function AliasTagContainer(props) {
     };
 
     const addTag = () => {
-        // set the value of newTag attribute
+        //set the value of newTag attribute
         props.newTag.setValue(newTag);
         //creating conditional execution of onTagAdd action based on widget autoSave config
         const onTagAddAction = autoSave ? props.onTagAddActionAutoSaveTrue : props.onTagAddActionAutoSaveFalse;
@@ -117,26 +117,26 @@ export function AliasTagContainer(props) {
         }
 
         if (inputValue.length > charLimit) {
-            //console.log("Character Limit exceeded");
+            //console.log("character limit exceeded");
             alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
             return;
         }
 
         //console.log("No error");
         setNewTag(inputValue);
-        setErrorMessage(""); // Clear any previous error message
+        setErrorMessage(""); // clear any previous error message
     };
 
     const inputRef = useRef(null);
 
     const handleBlur = () => {
-        // delay on clearing input value to allow user to click the + icon for add
+        //delay on clearing input value to allow user to click the + icon for add
         setTimeout(() => {
             if (!inputRef.current.contains(document.activeElement)) {
-                // clear input value if click is not on the input
+                //clear input value if click is not on the input
                 setNewTag(""); // clear  input field when it loses focus
             }
-        }, 200); // clear-delay value
+        }, 200); //clear-delay value
     };
 
     return (
@@ -164,7 +164,7 @@ export function AliasTagContainer(props) {
             {tagCount - tagLimit > 0 ? (
                 <button
                     className="ev-aliastags-admin-button ev-aliastags-admin-button-view-all"
-                    onClick={() => onClickMoreAction.execute()} // call tag overflow
+                    onClick={() => onClickMoreAction.execute()} //call tag overflow
                 >
                     <i className="mdi mdi-open-in-new"></i>
                     {tagCountDisplay} more
