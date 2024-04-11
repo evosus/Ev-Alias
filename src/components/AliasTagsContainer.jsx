@@ -110,18 +110,21 @@ export function AliasTagContainer(props) {
     const handleNewTagChange = event => {
         const inputValue = event.target.value;
         const pipeIndex = inputValue.indexOf("|");
-
         if (pipeIndex !== -1) {
             alert("The pipe character '|' is a reserved character and cannot be used.");
             return;
         }
-
-        if (inputValue.length > charLimit) {
-            //console.log("character limit exceeded");
+        const tagsWithoutDelimiters = masterTagsList.split(delimiter).filter(tag => tag.trim() !== "");
+        const tagsLengthWithoutDelimiters = tagsWithoutDelimiters.reduce((total, tag) => total + tag.length, 0);
+        if (tagsLengthWithoutDelimiters + inputValue.length > charLimit) {
             alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
             return;
         }
-
+        if (inputValue.length > 100) {
+            // check if input exceeds 100 char
+            alert("Maximum character limit for tag value is 100.");
+            return;
+        }
         //console.log("No error");
         setNewTag(inputValue);
         setErrorMessage(""); // clear any previous error message
