@@ -1,28 +1,20 @@
+/* eslint-disable no-alert */
 // eslint-disable-next-line no-unused-vars
 import { Component, createElement, useEffect, useRef, useState } from "react";
 
 export function Tag(props) {
     const input = useRef(null);
-    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-    const setSpanValue = value => {
-        input.current.innerHTML = value;
-    };
 
     useEffect(() => {
-        setSpanValue(props.tag);
+        input.current.innerHTML = props.tag;
     }, [props.tag]);
 
     const deleteTag = () => {
-        setShowConfirmDialog(true);
-    };
-
-    const confirmDeleteTag = () => {
-        props.deleteTag(props.index, props.tag);
-        setShowConfirmDialog(false);
-    };
-
-    const cancelDeleteTag = () => {
-        setShowConfirmDialog(false);
+        // Instead of showing the confirmation modal, directly prompt for confirmation
+        const confirmed = window.confirm("Confirm delete?");
+        if (confirmed) {
+            props.deleteTag(props.index, props.tag);
+        }
     };
 
     return (
@@ -33,13 +25,6 @@ export function Tag(props) {
                     <i className="mdi mdi-close"></i>
                 </button>
             </div>
-            {showConfirmDialog && (
-                <div className="confirmation-modal" style={{ top: "-110%" }}>
-                    <p>Confirm delete?</p>
-                    <button onClick={cancelDeleteTag}>No</button>
-                    <button onClick={confirmDeleteTag}>Yes</button>
-                </div>
-            )}
         </div>
     );
 }
