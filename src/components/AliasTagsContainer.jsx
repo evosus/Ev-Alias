@@ -147,7 +147,7 @@ export function AliasTagContainer(props) {
             <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
                 <input
                     type="text"
-                    placeholder="add a tag"
+                    placeholder="add an alias"
                     value={newTag}
                     onChange={handleNewTagChange}
                     onKeyDown={e => {
