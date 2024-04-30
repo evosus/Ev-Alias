@@ -10,10 +10,11 @@ export function Tag(props) {
     }, [props.tag]);
 
     const deleteTag = () => {
-        // Instead of showing the confirmation modal, directly prompt for confirmation
-        const confirmed = window.confirm("Confirm delete?");
-        if (confirmed) {
-            props.deleteTag(props.index, props.tag);
+        if (!props.ReadOnly) {
+            const confirmed = window.confirm("Confirm delete?");
+            if (confirmed) {
+                props.deleteTag(props.index, props.tag);
+            }
         }
     };
 

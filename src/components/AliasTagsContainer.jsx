@@ -11,7 +11,7 @@ import * as mx from "mendix";
 
 export function AliasTagContainer(props) {
     const [charLimit] = useState(props.charLimit ?? 1000);
-    const { onClickMoreAction } = props;
+    const { onClickMoreAction, ReadOnly } = props;
     const [mounted, setMounted] = useState(false);
     const [tagsArray, setTagsArray] = useState([]);
     const [masterTagsList, setMasterTagsList] = useState(props.masterTagsList.value ?? "");
@@ -37,33 +37,38 @@ export function AliasTagContainer(props) {
     }, []);
 
     const saveTag = (index, oldValue, newValue) => {
-        const fullTagsArray = props.masterTagsList.value.split(delimiter).filter(i => i);
-        fullTagsArray.splice(index, 1, newValue);
-        const updatedMasterTagsList = fullTagsArray.join(delimiter);
-        props.masterTagsList.setValue(updatedMasterTagsList);
-        //creating conditional execution of onChange action based on widget autoSave config
-        const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
-        if (onChangeAction) {
-            onChangeAction.execute();
+        if (!ReadOnly) {
+            const fullTagsArray = props.masterTagsList.value.split(delimiter).filter(i => i);
+            fullTagsArray.splice(index, 1, newValue);
+            const updatedMasterTagsList = fullTagsArray.join(delimiter);
+            props.masterTagsList.setValue(updatedMasterTagsList);
+            //creating conditional execution of onChange action based on widget autoSave config
+            const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
+            if (onChangeAction) {
+                onChangeAction.execute();
+            }
+            return true;
         }
-        return true;
+        return false;
     };
 
     const deleteTag = (index, value) => {
-        const fullTagsArrayBefore = props.masterTagsList.value.split(delimiter).filter(i => i);
-        //console.log("full tags array before delete:", fullTagsArrayBefore);
-        const fullTagsArray = [...fullTagsArrayBefore];
-        fullTagsArray.splice(index, 1);
-        //console.log("full tags array after delete:", fullTagsArray);
+        if (!ReadOnly) {
+            const fullTagsArrayBefore = props.masterTagsList.value.split(delimiter).filter(i => i);
+            //console.log("full tags array before delete:", fullTagsArrayBefore);
+            const fullTagsArray = [...fullTagsArrayBefore];
+            fullTagsArray.splice(index, 1);
+            //console.log("full tags array after delete:", fullTagsArray);
 
-        const updatedMasterTagsList = fullTagsArray.join(delimiter);
-        props.masterTagsList.setValue(updatedMasterTagsList);
-        //creating conditional execution of onChange action based on widget autoSave config
-        const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
-        if (onChangeAction) {
-            onChangeAction.execute();
+            const updatedMasterTagsList = fullTagsArray.join(delimiter);
+            props.masterTagsList.setValue(updatedMasterTagsList);
+            //creating conditional execution of onChange action based on widget autoSave config
+            const onChangeAction = autoSave ? props.onChangeActionAutoSaveTrue : props.onChangeActionAutoSaveFalse;
+            if (onChangeAction) {
+                onChangeAction.execute();
+            }
+            updateAllTags(updatedMasterTagsList);
         }
-        updateAllTags(updatedMasterTagsList);
     };
 
     const updateAllTags = value => {
@@ -85,6 +90,7 @@ export function AliasTagContainer(props) {
                     index={index}
                     saveTag={saveTag.bind(this)}
                     deleteTag={deleteTag.bind(this)}
+                    ReadOnly={ReadOnly}
                 />
             ));
             setMasterTagsList(value);
@@ -97,37 +103,41 @@ export function AliasTagContainer(props) {
     };
 
     const addTag = () => {
-        //set the value of newTag attribute
-        props.newTag.setValue(newTag);
-        //creating conditional execution of onTagAdd action based on widget autoSave config
-        const onTagAddAction = autoSave ? props.onTagAddActionAutoSaveTrue : props.onTagAddActionAutoSaveFalse;
-        if (onTagAddAction) {
-            onTagAddAction.execute();
+        if (!ReadOnly) {
+            //set the value of newTag attribute
+            props.newTag.setValue(newTag);
+            //creating conditional execution of onTagAdd action based on widget autoSave config
+            const onTagAddAction = autoSave ? props.onTagAddActionAutoSaveTrue : props.onTagAddActionAutoSaveFalse;
+            if (onTagAddAction) {
+                onTagAddAction.execute();
+            }
+            setNewTag(""); // clear the input field after adding the tag
         }
-        setNewTag(""); // clear the input field after adding the tag
     };
 
     const handleNewTagChange = event => {
-        const inputValue = event.target.value;
-        const pipeIndex = inputValue.indexOf("|");
-        if (pipeIndex !== -1) {
-            alert("The pipe character '|' is a reserved character and cannot be used.");
-            return;
+        if (!ReadOnly) {
+            const inputValue = event.target.value;
+            const pipeIndex = inputValue.indexOf("|");
+            if (pipeIndex !== -1) {
+                alert("The pipe character '|' is a reserved character and cannot be used.");
+                return;
+            }
+            const tagsWithoutDelimiters = masterTagsList.split(delimiter).filter(tag => tag.trim() !== "");
+            const tagsLengthWithoutDelimiters = tagsWithoutDelimiters.reduce((total, tag) => total + tag.length, 0);
+            if (tagsLengthWithoutDelimiters + inputValue.length > charLimit) {
+                alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
+                return;
+            }
+            if (inputValue.length > 100) {
+                // check if input exceeds 100 char
+                alert("Maximum character limit for tag value is 100.");
+                return;
+            }
+            //console.log("No error");
+            setNewTag(inputValue);
+            setErrorMessage(""); // clear any previous error message
         }
-        const tagsWithoutDelimiters = masterTagsList.split(delimiter).filter(tag => tag.trim() !== "");
-        const tagsLengthWithoutDelimiters = tagsWithoutDelimiters.reduce((total, tag) => total + tag.length, 0);
-        if (tagsLengthWithoutDelimiters + inputValue.length > charLimit) {
-            alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
-            return;
-        }
-        if (inputValue.length > 100) {
-            // check if input exceeds 100 char
-            alert("Maximum character limit for tag value is 100.");
-            return;
-        }
-        //console.log("No error");
-        setNewTag(inputValue);
-        setErrorMessage(""); // clear any previous error message
     };
 
     const inputRef = useRef(null);
@@ -143,26 +153,28 @@ export function AliasTagContainer(props) {
     };
 
     return (
-        <div className="ev-aliastags-container">
-            <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
-                <input
-                    type="text"
-                    placeholder="add an alias"
-                    value={newTag}
-                    onChange={handleNewTagChange}
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            addTag();
-                        }
-                    }}
-                    onBlur={handleBlur}
-                    ref={inputRef}
-                    style={{ marginBottom: "0", verticalAlign: "middle" }}
-                />
-                <span onClick={addTag.bind(this)}>
-                    <i className="mdi mdi-plus"></i>
-                </span>
-            </button>
+        <div className="ev-aliastags-container" style={{ paddingBottom: "4px" }}>
+            {!ReadOnly && (
+                <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
+                    <input
+                        type="text"
+                        placeholder="add an alias"
+                        value={newTag}
+                        onChange={handleNewTagChange}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                addTag();
+                            }
+                        }}
+                        onBlur={handleBlur}
+                        ref={inputRef}
+                        style={{ marginBottom: "0", verticalAlign: "middle" }}
+                    />
+                    <span onClick={addTag.bind(this)}>
+                        <i className="mdi mdi-plus"></i>
+                    </span>
+                </button>
+            )}
             {tagComponents.map(tag => tag)}
             {tagCount - tagLimit > 0 ? (
                 <button

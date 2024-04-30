@@ -45,6 +45,11 @@
                 <description>'Yes' for Profile pages. 'No' for Update screens.</description>
             </property>
 
+            <property key="ReadOnly" type="boolean" defaultValue="false">
+                <caption>Read-Only</caption>
+                <description>Read-only implementation?</description>
+            </property>
+
         </propertyGroup>
 
         <propertyGroup caption="AutoSave = True">
