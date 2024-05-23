@@ -155,25 +155,27 @@ export function AliasTagContainer(props) {
     return (
         <div className="ev-aliastags-container" style={{ paddingBottom: "4px" }}>
             {!ReadOnly && (
-                <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
-                    <input
-                        type="text"
-                        placeholder="add an alias"
-                        value={newTag}
-                        onChange={handleNewTagChange}
-                        onKeyDown={e => {
-                            if (e.key === "Enter") {
-                                addTag();
-                            }
-                        }}
-                        onBlur={handleBlur}
-                        ref={inputRef}
-                        style={{ marginBottom: "0", verticalAlign: "middle" }}
-                    />
-                    <span onClick={addTag.bind(this)}>
-                        <i className="mdi mdi-plus"></i>
-                    </span>
-                </button>
+                <div className="new-tag-input-container">
+                    <button className="ev-aliastags-admin-button ev-aliastags-admin-button-add">
+                        <input
+                            type="text"
+                            placeholder="add an alias"
+                            value={newTag}
+                            onChange={handleNewTagChange}
+                            onKeyDown={e => {
+                                if (e.key === "Enter") {
+                                    addTag();
+                                }
+                            }}
+                            onBlur={handleBlur}
+                            ref={inputRef}
+                            style={{ marginBottom: "0", verticalAlign: "middle" }}
+                        />
+                        <span onClick={addTag.bind(this)}>
+                            <i className="mdi mdi-plus"></i>
+                        </span>
+                    </button>
+                </div>
             )}
             {tagComponents.map(tag => tag)}
             {tagCount - tagLimit > 0 ? (
