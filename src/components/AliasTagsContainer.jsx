@@ -171,7 +171,14 @@ export function AliasTagContainer(props) {
                             ref={inputRef}
                             style={{ marginBottom: "0", verticalAlign: "middle" }}
                         />
-                        <span onClick={addTag.bind(this)}>
+                        <span
+                            onClick={addTag.bind(this)}
+                            style={{
+                                display: "inline-block",
+                                padding: "6px", // added slight padding for Adrian's lack of hand-eye coordination.
+                                cursor: "pointer"
+                            }}
+                        >
                             <i className="mdi mdi-plus"></i>
                         </span>
                     </button>
