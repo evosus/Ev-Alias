@@ -129,9 +129,9 @@ export function AliasTagContainer(props) {
                 alert(`Character limit exceeded. Maximum ${charLimit} characters.`);
                 return;
             }
-            if (inputValue.length > 100) {
-                // check if input exceeds 100 char
-                alert("Maximum character limit for tag value is 100.");
+            if (inputValue.length > 25) {
+                // check if input exceeds 25 char
+                alert("Maximum character limit for an alias is 25.");
                 return;
             }
             //console.log("No error");
